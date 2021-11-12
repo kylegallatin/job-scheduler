@@ -1,0 +1,5 @@
+flask==1.1.2
+flask-sqlalchemy==2.5.1
+waitress==2.0.0
+kubernetes==19.15.0
+Jinja2==3.0.3

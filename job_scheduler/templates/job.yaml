@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{job_name}}
+spec:
+  template:
+    spec:
+      containers:
+      - name: {{job_name}}
+        image: gcr.io/serene-radius-314018/python/python-base:0.0.2
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/bash", "-c"]
+        args: ["gsutil cp -r '{{gcs_path}}*' / ; pip install -r requirements.txt --no-cache-dir ; {{run_command}}"]
+        resources:
+          limits:
+            cpu: "2"
+          requests:
+            cpu: "1"
+      restartPolicy: Never
+  backoffLimit: 4

@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: job-scheduler
+  labels:
+    app: job-scheduler
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: job-scheduler
+  template:
+    metadata:
+      labels:
+        app: job-scheduler
+    spec:
+      serviceAccountName: k8s-admin
+      containers:
+      - name: job-scheduler
+        image: gcr.io/serene-radius-314018/job-scheduler/job-scheduler:TAG_NAME
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5000
+        env:
+        - name: EXAMPLE
+          value: VALUE
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: job-scheduler
+spec:
+  selector: 
+    app: job-scheduler
+  ports:
+    - protocol: TCP
+      port: 5000
+      targetPort: 5000
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/proxy-body-size: 24m
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  name: job-scheduler
+  namespace: default
+spec:
+  rules:
+  - host: job-scheduler.soapboxai.com
+    http:
+      paths:
+      - path: /(.*)
+        pathType: Prefix
+        backend:
+          serviceName: job-scheduler
+          servicePort: 5000
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: k8s-admin
+subjects:
+- kind: ServiceAccount
+  name: k8s-admin
+  namespace: default
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: k8s-admin

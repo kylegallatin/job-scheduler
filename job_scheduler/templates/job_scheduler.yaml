@@ -17,10 +17,11 @@ spec:
       serviceAccountName: k8s-admin
       containers:
       - name: job-scheduler
-        image: gcr.io/serene-radius-314018/job-scheduler/job-scheduler:TAG_NAME
+        # image: gcr.io/serene-radius-314018/job-scheduler/job-scheduler:TAG_NAME
+        image: job
         imagePullPolicy: IfNotPresent
         ports:
-        - containerPort: 5000
+        - containerPort: 8080
         env:
         - name: EXAMPLE
           value: VALUE
@@ -34,8 +35,8 @@ spec:
     app: job-scheduler
   ports:
     - protocol: TCP
-      port: 5000
-      targetPort: 5000
+      port: 8080
+      targetPort: 8080
 ---
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
@@ -55,7 +56,7 @@ spec:
         pathType: Prefix
         backend:
           serviceName: job-scheduler
-          servicePort: 5000
+          servicePort: 8080
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1

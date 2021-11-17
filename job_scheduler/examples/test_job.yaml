@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: test
+spec:
+  template:
+    spec:
+      containers:
+      - name: test
+        image: gcr.io/serene-radius-314018/python/python-base:0.0.2
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/bash", "-c"]
+        args: ["gsutil cp -r 'gs://soapbx-alpha/kyle-test61a13a18-d81d-4004-9fe6-71e2a3b9fd10/training_test/*' / ; pip install -r requirements.txt --no-cache-dir ; python train.py"]
+        resources:
+          limits:
+            cpu: "2"
+          requests:
+            cpu: "1"
+      restartPolicy: Never
+  backoffLimit: 4

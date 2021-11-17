@@ -26,7 +26,7 @@ class K8sJobScheduler(JobScheduler):
             "templates/job.yaml"
         )
 
-    def create(self, job_name: str, gcs_path: str, run_command: str) -> bool:
+    def create_job(self, job_name: str, gcs_path: str, run_command: str) -> bool:
         job_spec = self.render_template(job_name = job_name, gcs_path = gcs_path, run_command = run_command)
         job_spec_yaml = yaml.load(job_spec, Loader=yaml.FullLoader)
         self.client.create_namespaced_job("default", job_spec_yaml, pretty="true")
@@ -34,9 +34,28 @@ class K8sJobScheduler(JobScheduler):
     def render_template(self, **kwargs) -> str:
         job_spec = Template(self.job_template).render(
             context = self.__dict__,
+            job_name = kwargs["job_name"],
+            gcs_path = kwargs["gcs_path"],
+            run_command = kwargs["run_command"],
             job_meta = kwargs
         )
         return job_spec
 
-    def get_status(self, job_name: str) -> str:
-        
+    def get_job_status(self, job_name: str) -> dict:
+        """
+        This returns a dictionary representation of Kubernetes Job Status Object:
+
+        {'active': None,
+        'completion_time': datetime.datetime(2021, 11, 12, 15, 13, 18, tzinfo=tzlocal()),
+        'conditions': [{'last_probe_time': datetime.datetime(2021, 11, 12, 15, 13, 18, tzinfo=tzlocal()),
+                        'last_transition_time': datetime.datetime(2021, 11, 12, 15, 13, 18, tzinfo=tzlocal()),
+                        'message': None,
+                        'reason': None,
+                        'status': 'True',
+                        'type': 'Complete'}],
+        'failed': None,
+        'start_time': datetime.datetime(2021, 11, 12, 15, 12, 44, tzinfo=tzlocal()),
+        'succeeded': 1}
+        """
+        job = self.client.read_namespaced_job(job_name, "default", pretty="true")
+        return job.status.to_dict()

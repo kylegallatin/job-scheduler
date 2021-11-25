@@ -10,7 +10,7 @@ spec:
         image: gcr.io/serene-radius-314018/python/python-base:0.0.2
         imagePullPolicy: IfNotPresent
         command: ["/bin/bash", "-c"]
-        args: ["gsutil cp -r '{{gcs_path}}*' / ; pip install -r requirements.txt --no-cache-dir ; {{run_command}}"]
+        args: ["gsutil cp -r '{{gcs_path}}/*' / ; pip install -r requirements.txt --no-cache-dir ; {{run_command}}"]
         resources:
           limits:
             cpu: "2"

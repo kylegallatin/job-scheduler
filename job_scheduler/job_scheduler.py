@@ -79,8 +79,10 @@ class K8sJobScheduler(JobScheduler):
     def get_pod_status(self, job_name: str) -> dict:
         """
         Pod status returns significantly more info than job status.
-        The 'Phase' is likely the most useful metric, though much more info can be derived.
+        The 'phase' is likely the most useful metric, though much more info can be derived.
         Common phases: Pending | ContainerCreating | Running | Completed | Error | ImagePullBackOff | CrashLoopBackOff
+
+        Example value:
         {'conditions': [{'last_probe_time': None,
                         'last_transition_time': datetime.datetime(2021, 11, 24, 15, 24, 12, tzinfo=tzlocal()),
                         'message': None,

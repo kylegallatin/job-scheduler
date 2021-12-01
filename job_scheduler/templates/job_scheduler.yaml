@@ -18,7 +18,7 @@ spec:
       containers:
       - name: job-scheduler
         # image: gcr.io/serene-radius-314018/job-scheduler/job-scheduler:TAG_NAME
-        image: job
+        image: job-scheduler
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8080

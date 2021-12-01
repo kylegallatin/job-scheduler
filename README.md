@@ -2,9 +2,10 @@
 
 ## Build and Deploy Locally
 ```bash
+# build image
 docker build -t job-scheduler job_scheduler
 
-#clean workspace then deploy
+# clean workspace then deploy
 kubectl --context docker-desktop delete -f job_scheduler/templates/job_scheduler.yaml
 kubectl --context docker-desktop apply -f job_scheduler/templates/job_scheduler.yaml
 

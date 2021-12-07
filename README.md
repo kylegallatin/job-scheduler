@@ -12,6 +12,9 @@ kubectl --context docker-desktop apply -f job_scheduler/templates/job_scheduler.
 # expose port from cluster in another shell (restart this process if you redeploy)
 kubectl --context docker-desktop port-forward service/job-scheduler 8080:8080
 
+# get logs of the application
+kubectl --context docker-desktop logs deploy/job-scheduler
+
 # test server
 curl -v "http://localhost:8080"
 
@@ -21,6 +24,9 @@ curl "http://localhost:8080/job_status?job_name=test"
 
 # get phase of the job
 curl "http://localhost:8080/status?job_name=test" | jq .phase
+
+# delete the job to free up the job name
+curl -X POST -H 'Content-Type: application/json' "http://localhost:8080/delete" -d '{"job_name":"test"}'
 ```
 
 ## Development 

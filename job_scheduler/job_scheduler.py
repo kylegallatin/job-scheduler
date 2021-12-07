@@ -1,6 +1,7 @@
 from jinja2 import Template
 import yaml
 from kubernetes import client, config
+from kubernetes.client import V1Job, V1Status
 
 
 class JobScheduler:
@@ -9,6 +10,9 @@ class JobScheduler:
         pass
 
     def create(self):
+        raise NotImplementedError
+
+    def delete(self):
         raise NotImplementedError
 
     @staticmethod
@@ -36,14 +40,28 @@ class K8sJobScheduler(JobScheduler):
 
     def create_job(
         self, job_name: str, gcs_path: str, run_command: str
-    ) -> bool:
+    ) -> V1Job:
         job_spec = self.render_template(
             job_name=job_name, gcs_path=gcs_path, run_command=run_command
         )
         job_spec_yaml = yaml.load(job_spec, Loader=yaml.FullLoader)
-        self.job_client.create_namespaced_job(
-            "default", job_spec_yaml, pretty="true"
-        )
+        try:
+            job = self.job_client.create_namespaced_job(
+                namespace="default", body=job_spec_yaml, pretty="true"
+            )
+            return job
+        except Exception as e:
+            return e
+
+    def delete_job(self, job_name: str) -> V1Status:
+
+        try:
+            job = self.job_client.delete_namespaced_job(
+                namespace="default", name=job_name, pretty="true"
+            )
+            return job
+        except Exception as e:
+            return e
 
     def render_template(self, **kwargs) -> str:
         job_spec = Template(self.job_template).render(

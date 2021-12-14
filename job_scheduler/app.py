@@ -1,17 +1,20 @@
 import logging
 from flask import Flask, Response, request, jsonify
 import waitress
+import uuid
 from google.cloud import storage
 
 from job_scheduler import K8sJobScheduler
 
+#TODO move a bunch of this out to configs
 JOB_SCHEDULER = K8sJobScheduler()
 logger = logging.getLogger('waitress')
 logger.setLevel(logging.DEBUG)
 app = Flask(__name__)
-# storage_client = storage.Client()
-# bucket_name="gs://soapbx-alpha"
-# bucket = storage_client.get_bucket(bucket_name)
+storage_client = storage.Client()
+bucket_name = "soapbx-alpha"
+prefix = "training_jobs"
+bucket = storage_client.get_bucket(bucket_name)
 
 
 @app.route("/")
@@ -28,10 +31,11 @@ def create():
     run_command = request_data.get("run_command", "python train.py")
 
     if None not in (job_name, gcs_path, run_command):
-
-        return Response(
-            str(JOB_SCHEDULER.create_job(job_name, gcs_path, run_command)), 200
-        )
+        try:
+            JOB_SCHEDULER.create_job(job_name, gcs_path, run_command)
+            return Response(f"Submitting job: {job_name}", 200)
+        except Exception as e:
+            return Response(e, 500)
     else:
         return Response(f"Bad Request, parameter missing", 400)
 
@@ -41,8 +45,11 @@ def delete():
     request_data = request.get_json()
     job_name = request_data.get("job_name")
     if job_name:
-
-        return Response(str(JOB_SCHEDULER.delete_job(job_name)), 200)
+        try:
+            JOB_SCHEDULER.delete_job(job_name)
+            return Response(f"Deleting job: {job_name}", 200)
+        except Exception as e:
+            return Response(e, 500)
     else:
         return Response(f"Bad Request, missing parameter 'job_name'", 400)
 
@@ -64,8 +71,20 @@ def status():
     return jsonify(JOB_SCHEDULER.get_pod_status(job_name))
 
 
-# @app.route("/upload", methods=["POST"])
-# def upload():
+@app.route("/upload", methods=["POST"])
+def upload():
+    files = request.files
+    unique_identifier = uuid.uuid1()
+    gcs_path = f"{prefix}/{unique_identifier}"
+    logger.info(
+        f"uploading files to gs://{bucket_name}/{gcs_path}: {[f for f in files]}"
+    )
+    for f in files:
+        content = files[f].read()
+        blob = bucket.blob(f"{gcs_path}/{files[f].filename}")
+        blob.upload_from_string(content)
+    return Response(f"gs://{bucket_name}/{gcs_path}", 200)
+
 
 # @app.route('/logs')
 # def logs():

@@ -18,6 +18,10 @@ kubectl --context docker-desktop logs deploy/job-scheduler
 # test server
 curl -v "http://localhost:8080"
 
+# upload files
+echo "some text" > text_file.txt 
+curl -X POST -F "file=@text_file.txt" "http://localhost:8080/upload"
+
 # test API
 curl -X POST -H 'Content-Type: application/json' "http://localhost:8080/create" -d '{"gcs_path":"gs://soapbx-alpha/kyle-test61a13a18-d81d-4004-9fe6-71e2a3b9fd10/training_test", "job_name":"test", "run_command":"python train.py"}'
 curl "http://localhost:8080/job_status?job_name=test"

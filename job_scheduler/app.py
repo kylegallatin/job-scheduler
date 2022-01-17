@@ -35,7 +35,7 @@ def create():
             JOB_SCHEDULER.create_job(job_name, gcs_path, run_command)
             return Response(f"Submitting job: {job_name}", 200)
         except Exception as e:
-            return Response(e, 500)
+            return Response(f"create error: {str(e)}", 500)
     else:
         return Response(f"Bad Request, parameter missing", 400)
 
@@ -49,7 +49,7 @@ def delete():
             JOB_SCHEDULER.delete_job(job_name)
             return Response(f"Deleting job: {job_name}", 200)
         except Exception as e:
-            return Response(e, 500)
+            return Response(f"create error: {str(e)}", 500)
     else:
         return Response(f"Bad Request, missing parameter 'job_name'", 400)
 
@@ -84,6 +84,14 @@ def upload():
         blob = bucket.blob(f"{gcs_path}/{files[f].filename}")
         blob.upload_from_string(content)
     return Response(f"gs://{bucket_name}/{gcs_path}", 200)
+
+
+@app.route('/logs')
+def logs():
+    job_name = request.args.get("job_name")
+    if not job_name:
+        return Response("Missing required 'job_name' parameter", 400)
+    return jsonify(JOB_SCHEDULER.get_logs(job_name))
 
 
 # @app.route('/logs')

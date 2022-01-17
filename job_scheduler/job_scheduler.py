@@ -155,3 +155,12 @@ class K8sJobScheduler(JobScheduler):
         )
         pod = pod_list.items[0]
         return pod.status.to_dict()
+
+    def get_logs(self, job_name: str) -> str:
+        pod_list = self.pod_client.list_namespaced_pod(
+            namespace="default", label_selector=f"job-name={job_name}"
+        )
+        pod_name = pod_list.items[0].metadata.name
+        return self.pod_client.read_namespaced_pod_log(
+            name=pod_name, namespace='default'
+        )

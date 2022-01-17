@@ -19,18 +19,19 @@ kubectl --context docker-desktop logs deploy/job-scheduler
 curl -v "http://localhost:8080"
 
 # upload files
-echo "some text" > text_file.txt 
-curl -X POST -F "file=@text_file.txt" "http://localhost:8080/upload"
+curl -X POST -F "file1=@train.py" -F "file2=@requirements.txt" "http://localhost:8080/upload"
 
 # test API
-curl -X POST -H 'Content-Type: application/json' "http://localhost:8080/create" -d '{"gcs_path":"gs://soapbx-alpha/kyle-test61a13a18-d81d-4004-9fe6-71e2a3b9fd10/training_test", "job_name":"test", "run_command":"python train.py"}'
-curl "http://localhost:8080/job_status?job_name=test"
+curl -X POST -H 'Content-Type: application/json' "http://localhost:8080/create" -d '{"gcs_path":"gs://soapbx-alpha/training_jobs/5c325a0e-5e12-11ec-a273-0278df424219", "job_name":"test", "run_command":"python train.py"}'
 
 # get phase of the job
 curl "http://localhost:8080/status?job_name=test" | jq .phase
 
 # delete the job to free up the job name
 curl -X POST -H 'Content-Type: application/json' "http://localhost:8080/delete" -d '{"job_name":"test"}'
+
+# get job status
+curl "http://localhost:8080/job_status?job_name=test"
 ```
 
 ## Development 

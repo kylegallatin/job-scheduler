@@ -27,6 +27,9 @@ curl -X POST -H 'Content-Type: application/json' "http://localhost:8080/create" 
 # get phase of the job
 curl "http://localhost:8080/status?job_name=test" | jq .phase
 
+# get the logs of the logs
+curl "http://localhost:8080/logs?job_name=test"
+
 # delete the job to free up the job name
 curl -X POST -H 'Content-Type: application/json' "http://localhost:8080/delete" -d '{"job_name":"test"}'
 

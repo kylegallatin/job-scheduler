@@ -17,7 +17,6 @@ spec:
       serviceAccountName: k8s-admin
       containers:
       - name: job-scheduler
-        # image: gcr.io/serene-radius-314018/job-scheduler/job-scheduler:TAG_NAME
         image: job-scheduler
         imagePullPolicy: IfNotPresent
         ports:
@@ -49,7 +48,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: job-scheduler.soapboxai.com
+  - host: localhost
     http:
       paths:
       - path: /(.*)

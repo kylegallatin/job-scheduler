@@ -35,6 +35,9 @@ curl -X POST -H 'Content-Type: application/json' "http://localhost:8080/delete" 
 
 # get job status
 curl "http://localhost:8080/job_status?job_name=test"
+
+# get the output 
+gsutil ls gs://soapbx-alpha/training_jobs/5c325a0e-5e12-11ec-a273-0278df424219/output
 ```
 
 ## Development 

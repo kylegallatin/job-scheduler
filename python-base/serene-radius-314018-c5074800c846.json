@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "serene-radius-314018",
+  "private_key_id": "c5074800c8461a173870257d8d2f6c76defa959c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCwNnUUU6dH/k8E\nKbE8YzR+OfzlS3/cscjzHx4TCwKMQWUbtWUvf6N2K2nkw7/GOTczwJxchVa6QMe3\nmG+quE2yQ7uJ1GGhdwaHgBIKjS+hbeQPogj3COMCDgBLf85riBNcj2wb+QsldDyt\nHum+70Zhzp7y1X7b/6hEoaEZgopssWiCO6A1cHuJummKEGaWktnyj1Dvs7IkX0BV\nBMC3vpxZFxL1fBTUPetoyxNZr9zQEwJqJOXuhKJkRZKVtTZ/+Rg5u2npTtsA/23q\nUo4C6KZV/vq85+miOzB2eoPoXLnw85i65o1qF8Wzmbe847Vk0hNg2U0lDv9T0tjR\n4Pl8BjBzAgMBAAECggEASjnGO5e5QTQ4aJJ/W+aV+A3JH3UcGQSyluamrnLW0enC\nA1f3lXh4jJBg/MIQCBmVzTD3LGnmTHJ5LjcB4rHb2Jl7Z+WUcoVGtNEXyGYMiD1X\n8dXZXOXbacQoD6V4eAdL0JOBgI75SP+bh3kcEReNWCnG/pc75sPcR3yl9a7tTDcB\n/xpTxp2NMcK0y5nzyzrrHbAGaFkXH6wzGs7Q6ll4adaqDziT9dl1chkE57W7Nto0\n3p2++tsrdTlcWGVKJoC24h7YFePiSfcAoDCRiXgA0VDmwpXdg+HBOJIwA2LyUXHl\nh+7ySRbevMbkjdCfumrPuIu7754X8LGLZvxcdFoCEQKBgQD1GWhMX2k5ZhxTkm0V\nOP0zXWm7HSmbHi86L/8OOrRDoC2cuGTaCGdmHUBIJPh7esVNs7LvLB2y/cV/yjNY\nTOEet0o3fMdWH3dI9T2kFpLmJYpA7UxfvWIpRaJHNVREv+BSNrlyqRzaAAmJJZ+F\n9JPhng6xhccCaHolTK81yXNs5QKBgQC4DLz4d19NIAn3fgU2f72wl5pate0wl83P\n4t3viIkpaoYNc204QFqK5noXqswWmmn0gXOZicJUkaaeEHegCHJgfdhaDSmdkWqr\nDrPAC14rFIb5nckNIfdEfA6XkESDxAmMRaHfWTNg4fhwbNISXbp0uG3LuENpOYaM\nO8Utwm0qdwKBgQCcHtf5tdifsDQg46dKGmfmHP1pK5VB8kMg7Eups6j5XoFPT4Em\nBK5gNAerLKl+deBRs0Ip6M7uIYl48cIs36OR3iyPFZMff6GKvnPKHnrp0EW1P7Ij\nVc29/lX0x7pqpFHt7F/J8oCnN9jbHDT1ram4z+YKG+180jHjqmn8d9pnJQKBgBg3\nXNnYYwqzz3vn8emkzyGgIOgUjdvZ7XOP5yGwNlPjtzWn3VQMa51hC+l3SJkkwhIw\nwjQOgyo7a8/aXNMKqXn2tPPMTZB05LMTISWAmWhTsBrB3wVCVdWF+SmKCunHbnYt\nZ0oK4464zMaGGvHdsT3QUmn+magLsJ9c8em+bjyrAoGAJmiz9UhZQzBYjdn8HQN5\nG2SrXKpsIC1/igRdLeEqdSPD5dwRKq+cMJBgHOpExnMHTjJE3JVf/QjtBkH2hhrX\nEGPTA4/K56S8JXkVPu7IbyN9Mafbsfa84dwAIcUkYah7jNGcbkX91szDlT7N12va\n2Y7YKGbw0wOFlWhnW+7oVhk=\n-----END PRIVATE KEY-----\n",
+  "client_email": "soap-box-app-creator@serene-radius-314018.iam.gserviceaccount.com",
+  "client_id": "107176642278504791531",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/soap-box-app-creator%40serene-radius-314018.iam.gserviceaccount.com"
+}

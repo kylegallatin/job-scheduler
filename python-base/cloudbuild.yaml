@@ -1,0 +1,9 @@
+steps:
+- id: "Build and push image"
+  name: gcr.io/cloud-builders/docker
+  args: ['build', '-t', 'gcr.io/serene-radius-314018/python/python-base:$TAG_NAME', '-f', 'python-base/Dockerfile', 'python-base']
+substitutions:
+  TAG_NAME: 0.0.2
+images:
+  - gcr.io/serene-radius-314018/python/python-base:$TAG_NAME
+timeout: 600s

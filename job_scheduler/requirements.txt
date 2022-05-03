@@ -5,3 +5,4 @@ waitress==2.0.0
 kubernetes==19.15.0
 Jinja2==3.0.3
 google-cloud-storage
+werkzeug==2.0.3

@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
       - name: {{job_name}}
-        image: gcr.io/serene-radius-314018/python/python-base:0.0.2
+        image: gcr.io/serene-radius-314018/python/python-base:0.0.4
         imagePullPolicy: IfNotPresent
         command: ["/bin/bash", "-c"]
         args: ["./run.sh {{gcs_path}} '{{run_command}}'"]

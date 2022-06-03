@@ -1,6 +1,7 @@
 FROM python:3.8 
 
 WORKDIR /workspace
+RUN mkdir -p /data
 
 RUN apt update && \
       apt install -y curl 

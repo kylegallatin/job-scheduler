@@ -27,12 +27,15 @@ def create():
     request_data = request.get_json()
     job_name = request_data.get("job_name")
     gcs_path = request_data.get("gcs_path")
+    machine_type = request_data.get("machine_type")
     # TODO move default to config
     run_command = request_data.get("run_command", "python train.py")
 
-    if None not in (job_name, gcs_path, run_command):
+    if None not in (job_name, gcs_path, run_command, machine_type):
         try:
-            JOB_SCHEDULER.create_job(job_name, gcs_path, run_command)
+            JOB_SCHEDULER.create_job(
+                job_name, gcs_path, run_command, machine_type
+            )
             return Response(f"Submitting job: {job_name}", 200)
         except Exception as e:
             return Response(f"create error: {str(e)}", 500)

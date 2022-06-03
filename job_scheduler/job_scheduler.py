@@ -38,7 +38,7 @@ class K8sJobScheduler(JobScheduler):
         self.job_template = self.read_file("templates/job.yaml")
 
     def create_job(
-        self, job_name: str, gcs_path: str, run_command: str
+        self, job_name: str, gcs_path: str, run_command: str, machine_type: str
     ) -> dict:
         job_spec = self.render_template(
             job_name=job_name, gcs_path=gcs_path, run_command=run_command

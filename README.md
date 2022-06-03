@@ -22,7 +22,7 @@ curl -v "http://localhost:8080"
 curl -X POST -F "file1=@train.py" -F "file2=@requirements.txt" "http://localhost:8080/upload"
 
 # test API
-curl -X POST -H 'Content-Type: application/json' "http://localhost:8080/create" -d '{"gcs_path":"gs://soapbx-alpha/training_jobs/5c325a0e-5e12-11ec-a273-0278df424219", "job_name":"test", "run_command":"python train.py"}'
+curl -X POST -H 'Content-Type: application/json' "http://localhost:8080/create" -d '{"gcs_path":"gs://soapbx-alpha/training_jobs/5c325a0e-5e12-11ec-a273-0278df424219", "job_name":"test", "run_command":"python train.py", "machine_type": "cpu"}'
 
 # get phase of the job
 curl "http://localhost:8080/status?job_name=test" | jq .phase
